@@ -75,9 +75,9 @@ HOTKEY_PRESETS_MAC = [
 ]
 
 LLM_MODEL_PRESETS = [
-    "google/gemma-4-26b-a4b-it",
-    "google/gemini-3.1-flash-lite-preview",
     "google/gemini-3.5-flash-lite",
+    "google/gemini-3.1-flash-lite-preview",
+    "google/gemma-4-26b-a4b-it",
     "openai/gpt-5.4-nano",
     "openai/gpt-5.4-mini",
     "openai/gpt-4o-mini",
@@ -474,7 +474,7 @@ class DiktatFrontend:
             anchor="w",
         ).pack(side="left")
 
-        current_model = llm_cfg.get("model") or "google/gemma-4-26b-a4b-it"
+        current_model = llm_cfg.get("model") or "google/gemini-3.5-flash-lite"
         model_values = list(LLM_MODEL_PRESETS)
         if current_model not in model_values:
             model_values.insert(0, current_model)
@@ -1325,6 +1325,7 @@ class DiktatFrontend:
 
 
 if __name__ == "__main__":
-    minimized = "--minimized" in sys.argv
-    app = DiktatFrontend(start_minimized=minimized)
-    app.run()
+    if dictate.ensure_single_instance():
+        minimized = "--minimized" in sys.argv
+        app = DiktatFrontend(start_minimized=minimized)
+        app.run()

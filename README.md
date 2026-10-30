@@ -22,10 +22,11 @@ Optimiert für **Windows (inkl. AMD Radeon RX 7900 XT via Vulkan-GPU)** und **ma
     - **Push-to-Talk (wie Wispr Flow):** Gedrückt halten zum Sprechen, loslassen zum Einfügen.
   - **Transkript-Verlauf (`history.json`):** Speichert die letzten Transkriptionen dauerhaft – mit Suchfeld und **1-Klick-Kopieren**, falls ein Zielfenster das Einfügen blockiert hat.
   - **Zwischenablage-Sicherheit:** Das letzte Transkript bleibt auch nach dem Einfügen in der Zwischenablage (`Strg+V` / `Cmd+V` jederzeit möglich).
+  - **Doppelstart-Schutz:** Eine systemweite Dateisperre verhindert parallele App-, Menüleisten- und CLI-Instanzen – dadurch kann kein zweiter Hotkey-Listener denselben Text erneut einfügen.
   - **✨ Optionale KI-Nachbearbeitung via OpenRouter (wie Wispr Flow):**
     - Zweistufige Text-Bereinigung:
       1. **Lokaler 0-ms Sofort-Filter:** Entfernt einfache Fülllaute (*„äh“*, *„ähm“*, *„hm“*) und Wortstotterer sofort lokal ohne Internet.
-      2. **Optionaler OpenRouter LLM-Layer (per Klick ein-/ausschaltbar):** Bereinigt Füllwörter, Selbstkorrekturen (*„am Dienstag, äh nein, am Donnerstag“*), Rechtschreibung, Groß-/Kleinschreibung und Satzbau in ~0,2–0,3 s (mit TLS-Connection-Warmup bereits während des Sprechens und sofortigem Offline-Fallback auf das lokale Whisper-Transkript).
+      2. **Optionaler OpenRouter LLM-Layer (per Klick ein-/ausschaltbar):** Bereinigt Füllwörter, Selbstkorrekturen (*„am Dienstag, äh nein, am Donnerstag“*), Rechtschreibung, Groß-/Kleinschreibung und Satzbau mit dem schnellen `gemini-3.5-flash-lite` als Standardmodell (mit TLS-Connection-Warmup bereits während des Sprechens und sofortigem Offline-Fallback auf das lokale Whisper-Transkript).
   - **Autostart im Hintergrund (Windows & macOS):** Direkt per Checkbox **„Autostart (Hintergrund)“** im Frontend (oder im System-Tray-Menü) aktivierbar – startet beim Login unsichtbar im System-Tray bzw. minimiert im Hintergrund, genau wie Wispr Flow.
 
 ---

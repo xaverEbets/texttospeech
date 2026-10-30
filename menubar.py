@@ -234,5 +234,6 @@ class DiktatApp(rumps.App):
 
 
 if __name__ == "__main__":
-    NSApplication.sharedApplication().setActivationPolicy_(NSApplicationActivationPolicyAccessory)
-    DiktatApp().run()
+    if dictate.ensure_single_instance():
+        NSApplication.sharedApplication().setActivationPolicy_(NSApplicationActivationPolicyAccessory)
+        DiktatApp().run()
