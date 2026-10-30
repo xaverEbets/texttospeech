@@ -1,6 +1,8 @@
 faster-whisper
 sounddevice
 numpy
-keyboard
+keyboard; sys_platform != "darwin"
+pyobjc-framework-Quartz; sys_platform == "darwin"
+rumps; sys_platform == "darwin"
 pyperclip
 requests
