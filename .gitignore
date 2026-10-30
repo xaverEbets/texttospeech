@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 .cache/
 history.json
+diktat.log
 *key*.txt
 .env*
 

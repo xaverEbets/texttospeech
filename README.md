@@ -49,10 +49,12 @@ Optimiert für **Windows (inkl. AMD Radeon RX 7900 XT via Vulkan-GPU)** und **ma
    ./start.sh
    ```
 
-   - Alternativ nur als reine macOS-Menüleisten-App starten:
+   - **`Diktat starten.command`** startet die reine Menüleisten-App unabhängig vom Terminal; das Terminalfenster kann daher geschlossen werden. Startmeldungen und Fehler stehen in `diktat.log`.
+   - Alternativ mit dem großen Einstellungsfenster im Terminal starten:
      ```bash
-     ./start.sh --menubar
+     ./start.sh
      ```
+     Die Menüleisten-App lässt sich auch direkt über `./start.sh --menubar` starten.
 3. **Rechte freigeben** (einmalig nötig, damit Hotkey & Auto-Paste funktionieren):
    - Systemeinstellungen → Datenschutz & Sicherheit → **Bedienungshilfen**
    - **Eingabeüberwachung**
