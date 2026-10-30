@@ -2,18 +2,19 @@
 
 [hotkey]
 # Taste, die die Aufnahme startet und stoppt (Name wie im Python-Paket "keyboard").
-# Beispiele: "right ctrl", "f9", "scroll lock", "pause"
-key = "right ctrl"
+# macOS (MacBook): "f9", "f8", "right option"
+# Windows: "right ctrl", "f9", "scroll lock", "pause"
+key = "right option"
 
 [audio]
-# Leer = Standard-Mikrofon. Sonst ein Teil des Geraetenamens, z.B. "Headset".
+# Leer = Standard-Mikrofon. Sonst ein Teil des Geraetenamens, z.B. "MacBook" oder "Headset".
 device = ""
 # Aufnahmen kuerzer als diese Sekunden werden verworfen.
 min_seconds = 0.4
 
 [transcription]
-# "cpu"        = faster-whisper auf dem Prozessor, laeuft sofort ohne Extra-Setup.
-# "whisper_cpp" = whisper.cpp mit Vulkan, nutzt die AMD-Grafikkarte.
+# "cpu"         = faster-whisper auf dem Prozessor, laeuft sofort ohne Extra-Setup.
+# "whisper_cpp" = whisper.cpp als Server (Vulkan unter Windows, optional Metal unter macOS).
 backend = "cpu"
 # Sprache fest auf Deutsch. Leer lassen = automatische Erkennung.
 language = "de"
@@ -28,7 +29,7 @@ compute_type = "int8"
 [whisper_cpp]
 # Adresse des whisper.cpp-Servers.
 url = "http://127.0.0.1:8080"
-# Optional: Pfad zu whisper-server.exe. Ist er gesetzt, startet das Tool den Server selbst.
+# Optional: Pfad zur Server-Binary. Ist er gesetzt, startet das Tool den Server selbst.
 # Leer lassen, wenn du den Server lieber manuell startest.
 exe = ""
 # Pfad zum Modell, z.B. ggml-large-v3-turbo.bin. Nur noetig, wenn exe gesetzt ist.
