@@ -1,36 +1,81 @@
-# Einstellungen fuer das Diktier-Tool
+# Einstellungen fuer das Diktier-Tool (Windows & macOS)
 
 [hotkey]
-# Taste, die die Aufnahme startet und stoppt (Name wie im Python-Paket "keyboard").
-# macOS (MacBook): "f9", "f8", "right option"
-# Windows: "right ctrl", "f9", "scroll lock", "pause"
-key = "right option"
+# Taste, die die Aufnahme startet und stoppt.
+# macOS (MacBook): "right option", "right command", "f9", "f8", "fn"
+# Windows: "right ctrl", "right alt", "f9", "f8", "scroll lock", "pause"
+# Hinweis: "right option" und "right alt" werden plattformuebergreifend automatisch angepasst.
+key = "right alt"
+
+# Aufnahmemodus:
+# "toggle" = 1x druecken startet Aufnahme, nochmal druecken stoppt & fuegt ein
+# "hold"   = Push-to-Talk: Taste gedrueckt halten zum Sprechen, loslassen zum Einfuegen
+mode = "toggle"
 
 [audio]
 # Leer = Standard-Mikrofon. Sonst ein Teil des Geraetenamens, z.B. "MacBook" oder "Headset".
 device = ""
 # Aufnahmen kuerzer als diese Sekunden werden verworfen.
-min_seconds = 0.4
+min_seconds = 0.35
+# Akustisches Feedback (Signalton bei Start/Stopp)
+sound = true
+# Text nach dem automatischen Einfuegen auch in der Zwischenablage behalten (fuer manuelles Strg+V / Cmd+V)
+keep_in_clipboard = true
 
 [transcription]
-# "cpu"         = faster-whisper auf dem Prozessor, laeuft sofort ohne Extra-Setup.
-# "whisper_cpp" = whisper.cpp als Server (Vulkan unter Windows, optional Metal unter macOS).
-backend = "cpu"
-# Sprache fest auf Deutsch. Leer lassen = automatische Erkennung.
+# "auto"        = Automatisch optimale GPU-Beschleunigung waehlen:
+#                 - Windows (AMD RX 7900 XT etc.): whisper.cpp mit Vulkan-GPU (automatisches Setup)
+#                 - macOS (Apple M2 / Silicon): mlx-whisper auf Apple Metal GPU
+#                 - Fallback: faster-whisper auf CPU
+# "whisper_cpp" = whisper.cpp Server erzwingen (Vulkan unter Windows / Metal unter macOS)
+# "mlx"         = mlx-whisper erzwingen (nur macOS Apple Silicon M1/M2/M3/M4)
+# "cpu"         = faster-whisper auf dem Prozessor erzwingen
+backend = "auto"
+
+# Sprache fest auf Deutsch ("de"). Leer lassen ("") = automatische Spracherkennung.
 language = "de"
 
 [cpu]
-# tiny, base, small, medium, large-v3
-# "small" ist ein guter Start. "medium" ist genauer, aber langsamer.
-model = "medium"
+# Modell fuer faster-whisper (CPU):
+# "large-v3-turbo" (empfohlen: sehr genau & schnell), "medium", "small", "base", "tiny"
+model = "large-v3-turbo"
 # int8 ist auf der CPU schnell und sparsam beim Speicher.
 compute_type = "int8"
 
+[mlx]
+# Modell fuer Apple Silicon (M2) GPU via MLX.
+# 4-bit-quantisiert: ~460 MB Download / ~0,6 GB RAM - ideal fuer 8 GB MacBooks.
+model = "mlx-community/whisper-large-v3-turbo-q4"
+# Alternativen (einfach einkommentieren):
+# model = "mlx-community/whisper-large-v3-turbo"      # fp16, ~1,6 GB, minimal genauer
+# model = "mlx-community/whisper-medium-mlx"          # kleiner, schneller, ungenauer
+# model = "mlx-community/whisper-small-mlx"           # deutlich ungenauer bei Deutsch
+
 [whisper_cpp]
-# Adresse des whisper.cpp-Servers.
-url = "http://127.0.0.1:8080"
-# Optional: Pfad zur Server-Binary. Ist er gesetzt, startet das Tool den Server selbst.
-# Leer lassen, wenn du den Server lieber manuell startest.
+# Adresse des lokalen whisper.cpp-Servers (standardmaessig localhost:8080).
+url = "http://localhost:8080"
+# Optional: Eigener Pfad zur Server-Binary.
+# Wenn leer (""), laedt das Tool unter Windows automatisch die Vulkan-GPU-Binary nach .cache/whisper_cpp/ herunter.
 exe = ""
-# Pfad zum Modell, z.B. ggml-large-v3-turbo.bin. Nur noetig, wenn exe gesetzt ist.
-model = ""
+# Modell fuer whisper.cpp:
+# Wenn nur ein Dateiname angegeben ist (oder leer), wird es automatisch nach .cache/whisper_cpp/ geladen.
+# Empfohlen fuer RX 7900 XT: "ggml-large-v3-turbo-q8_0.bin" (~834 MB, extrem schnell) oder "ggml-large-v3-turbo.bin" (~1.5 GB, FP16).
+model = "ggml-large-v3-turbo-q8_0.bin"
+
+[llm]
+# Optionale KI-Nachbearbeitung (wie bei Wispr Flow) ueber OpenRouter:
+# Entfernt Fuellwoerter ("aehm", "aeh", "hm"), Stotterer und Selbstkorrekturen
+# und korrigiert Rechtschreibung, Gross-/Kleinschreibung sowie Zeichensetzung.
+enabled = false
+# OpenRouter API-Key (beginnt mit "sk-or-v1-..."). Alternativ per Umgebungsvariable OPENROUTER_API_KEY.
+api_key = ""
+# Schnelles Modell auf OpenRouter (Beispiele: "google/gemma-4-26b-a4b-it", "google/gemini-3.1-flash-lite-preview",
+# "openai/gpt-5.4-nano", "openai/gpt-4o-mini", "anthropic/claude-haiku-5.5", "mistralai/mistral-small-2603")
+model = "google/gemma-4-26b-a4b-it"
+# Maximale Wartezeit in Sekunden (danach wird sofort das ungefilterte Whisper-Transkript eingefuegt)
+timeout = 3.5
+# Lokaler Sofort-Filter fuer einfache Fuelllaute ("aeh", "aehm") auch ohne API (0 ms Latenz)
+local_filler_cleanup = true
+# Optionaler eigener System-Prompt (leer = optimierter Standard-Prompt fuer Diktate)
+custom_prompt = ""
+

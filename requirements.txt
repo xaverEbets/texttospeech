@@ -1,8 +1,11 @@
 faster-whisper
+mlx-whisper; sys_platform == "darwin" and platform_machine == "arm64"
 sounddevice
 numpy
 keyboard; sys_platform != "darwin"
 pyobjc-framework-Quartz; sys_platform == "darwin"
 rumps; sys_platform == "darwin"
+pystray; sys_platform != "darwin"
+Pillow
 pyperclip
 requests

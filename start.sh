@@ -12,10 +12,21 @@ if [[ ! -d .venv ]]; then
 else
   # shellcheck disable=SC1091
   source .venv/bin/activate
+  python -c "import PIL, sounddevice, pyperclip, requests" 2>/dev/null || {
+    echo "Aktualisiere Abhaengigkeiten ..."
+    python -m pip install -r requirements.txt
+  }
 fi
 
 echo
 echo "Hinweis macOS: Bedienungshilfen (+ ggf. Eingabeueberwachung und Mikrofon)"
 echo "fuer Terminal/iTerm/Cursor freigeben, sonst reagiert der Hotkey nicht."
 echo
-exec python dictate.py
+
+if [[ "${1:-}" == "--cli" ]]; then
+  exec python dictate.py
+elif [[ "${1:-}" == "--menubar" ]]; then
+  exec python menubar.py
+else
+  exec python app.py
+fi

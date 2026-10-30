@@ -9,7 +9,15 @@ if not exist .venv (
     python -m pip install -r requirements.txt
 ) else (
     call .venv\Scripts\activate.bat
+    python -c "import PIL, pystray, sounddevice, pyperclip, requests" 2>nul || (
+        echo Aktualisiere Abhaengigkeiten ...
+        python -m pip install -r requirements.txt
+    )
 )
 
-python dictate.py
-pause
+if "%1"=="--cli" (
+    python dictate.py
+    pause
+) else (
+    start "" .venv\Scripts\pythonw.exe app.py
+)
