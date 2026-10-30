@@ -22,7 +22,7 @@ language = "de"
 [cpu]
 # tiny, base, small, medium, large-v3
 # "small" ist ein guter Start. "medium" ist genauer, aber langsamer.
-model = "small"
+model = "medium"
 # int8 ist auf der CPU schnell und sparsam beim Speicher.
 compute_type = "int8"
 
