@@ -1,0 +1,35 @@
+# Einstellungen fuer das Diktier-Tool
+
+[hotkey]
+# Taste, die die Aufnahme startet und stoppt (Name wie im Python-Paket "keyboard").
+# Beispiele: "right ctrl", "f9", "scroll lock", "pause"
+key = "right ctrl"
+
+[audio]
+# Leer = Standard-Mikrofon. Sonst ein Teil des Geraetenamens, z.B. "Headset".
+device = ""
+# Aufnahmen kuerzer als diese Sekunden werden verworfen.
+min_seconds = 0.4
+
+[transcription]
+# "cpu"        = faster-whisper auf dem Prozessor, laeuft sofort ohne Extra-Setup.
+# "whisper_cpp" = whisper.cpp mit Vulkan, nutzt die AMD-Grafikkarte.
+backend = "cpu"
+# Sprache fest auf Deutsch. Leer lassen = automatische Erkennung.
+language = "de"
+
+[cpu]
+# tiny, base, small, medium, large-v3
+# "small" ist ein guter Start. "medium" ist genauer, aber langsamer.
+model = "small"
+# int8 ist auf der CPU schnell und sparsam beim Speicher.
+compute_type = "int8"
+
+[whisper_cpp]
+# Adresse des whisper.cpp-Servers.
+url = "http://127.0.0.1:8080"
+# Optional: Pfad zu whisper-server.exe. Ist er gesetzt, startet das Tool den Server selbst.
+# Leer lassen, wenn du den Server lieber manuell startest.
+exe = ""
+# Pfad zum Modell, z.B. ggml-large-v3-turbo.bin. Nur noetig, wenn exe gesetzt ist.
+model = ""
