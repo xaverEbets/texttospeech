@@ -30,12 +30,14 @@ HOTKEY_PRESETS = [
     ("F8", "f8"),
 ]
 
+# Template-Icons (schwarz mit Transparenz): macOS faerbt sie passend zur Menueleiste um.
+ICON_DIR = APP_DIR / "icons"
 ICONS = {
-    "loading": "⏳",
-    "idle": "🎙",
-    "recording": "🔴",
-    "transcribing": "⏳",
-    "error": "⚠️",
+    "loading": str(ICON_DIR / "mic-working.png"),
+    "idle": str(ICON_DIR / "mic.png"),
+    "recording": str(ICON_DIR / "mic-recording.png"),
+    "transcribing": str(ICON_DIR / "mic-working.png"),
+    "error": str(ICON_DIR / "mic-error.png"),
 }
 
 
@@ -46,7 +48,8 @@ def shorten(text, limit=60):
 
 class DiktatApp(rumps.App):
     def __init__(self):
-        super().__init__("Diktat", title=ICONS["loading"], quit_button=None)
+        super().__init__("Diktat", icon=ICONS["loading"], template=True, quit_button=None)
+        self.shown_state = "loading"
         self.cfg = dictate.load_config()
         self.dictation = None
         self.listener = None
@@ -111,7 +114,9 @@ class DiktatApp(rumps.App):
                 "transcribing": "Transkribiere …",
             }
             self.status_item.title = texts[state]
-        self.title = ICONS[state]
+        if state != self.shown_state:
+            self.shown_state = state
+            self.icon = ICONS[state]
 
         if self.dictation is not None:
             history = list(self.dictation.history)
